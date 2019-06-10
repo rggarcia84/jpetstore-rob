@@ -1,6 +1,6 @@
 <%@ include file="IncludeTop.jsp" %>
 
-<table border="0" cellspacing="0" width="100%" bgcolor="red">
+<table border="0" cellspacing="0" width="100%">
   <tbody>
   <tr>
     <td valign="top" width="100%">
