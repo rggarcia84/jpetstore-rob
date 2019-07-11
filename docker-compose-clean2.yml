@@ -1,0 +1,83 @@
+version: '3.5'
+
+services:
+  db:
+   image: robggarcia84/mysqlqat:latest
+   container_name: mysqldes
+   hostname: jpetstore-db.bmc.aws.local
+   networks:
+         my_network:
+            ipv4_address: 172.20.0.3
+   restart: always
+   environment:  
+     MYSQL_ROOT_PASSWORD: 'bmcAdm1n'
+   ports:
+     - "32782:3306"
+   volumes:
+    - ./data/mysqldes:/var/lib/mysql
+
+  db2:
+   image: robggarcia84/mysqlqat:latest
+   container_name: mysqlqat
+   hostname: jpetstore-db.bmc.aws.local
+   networks:
+         my_network2:
+            ipv4_address: 172.21.0.3
+   restart: always
+   environment:  
+     MYSQL_ROOT_PASSWORD: 'bmcAdm1n'
+   ports:
+     - "32783:3306"
+   volumes:
+    - ./data/mysqlqat:/var/lib/mysql
+
+  web:
+    image: juananmora/tomcatdes
+    container_name: tomcatdes
+    networks:
+        - my_network
+    extra_hosts:
+        - "jpetstore-db.bmc.aws.local:172.20.0.3"
+    # Environment variables do not appear to be getting loaded the first time Tomcat starts!
+    environment:
+      JDBC_DRIVER: com.mysql.jdbc.Driver
+      JDBC_URL: jdbc:mysql://jpetstore-db.bmc.aws.local:3306/jpetstore
+      JDBC_USER: root
+      JDBC_PASS: bmcAdm1n
+    ports:
+      - "58080:8080"
+    links:
+      - db:mysqldes
+      
+  web2:
+    image: juananmora/tomcatdes
+    container_name: tomcatqat
+    networks:
+        - my_network2
+    extra_hosts:
+        - "jpetstore-db.bmc.aws.local:172.21.0.3"
+    # Environment variables do not appear to be getting loaded the first time Tomcat starts!
+    environment:
+      JDBC_DRIVER: com.mysql.jdbc.Driver
+      JDBC_URL: jdbc:mysql://jpetstore-db.bmc.aws.local:3306/jpetstore
+      JDBC_USER: root
+      JDBC_PASS: bmcAdm1n
+    ports:
+      - "58081:8080"
+    links:
+      - db:mysqlqat
+   
+networks:
+  my_network:
+   name: netdes
+   driver: bridge
+   ipam:
+    config:
+        - subnet: 172.20.0.0/16
+
+  my_network2:
+   name: netqat
+   driver: bridge
+   ipam:
+    config:
+        - subnet: 172.21.0.0/16

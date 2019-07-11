@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  namespace: jpetstore-prd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysqlprd
+        image: robggarcia84/mysql:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        

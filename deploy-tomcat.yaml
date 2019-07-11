@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tomcat-deployment
+  namespace: jpetstore-prd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - name: tomcatprd
+        image: robggarcia84/tomcatdes2:v.14
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: jpetstore-prd
+  labels:
+    run: mysql
+spec:
+  type: NodePort
+  ports:
+  - port: 8085
+    targetPort: 8080    
+    protocol: TCP
+  selector:
+    app: mysql

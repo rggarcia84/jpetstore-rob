@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tomcat-deployment
+  namespace: jpetstore-prd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      hostAliases:
+      - ip: "10.1.0.128"
+        hostnames:
+        - "jpetstore-db.bmc.aws.local"
+      containers:
+      - name: tomcatprd
+        image: robggarcia84/tomcatdes2:v.17
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        args:
+        - "/etc/hosts"
