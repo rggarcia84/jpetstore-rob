@@ -14,7 +14,7 @@ spec:
         app: tomcat
     spec:
       hostAliases:
-      - ip: "10.1.0.128"
+      - ip: "10.1.0.166" # APAÑO: LE ASIGNO LA IP DEL POD DE MYSQL (EFIMERO)
         hostnames:
         - "jpetstore-db.bmc.aws.local"
       containers:
