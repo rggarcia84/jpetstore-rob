@@ -15,7 +15,7 @@
         <struts.version>1.2.9</struts.version>
         <xml-rpc.version>1.1.0</xml-rpc.version>
         <dbcp.version>1.2.2.osgi</dbcp.version>
-        <junit.version>4.6</junit.version>
+        <junit.version>4.13.1</junit.version>
         <commons-io.version>1.3.2</commons-io.version>
         <urlrewrite.version>3.1.0</urlrewrite.version>
         <spring-js.version>2.0.7.RELEASE</spring-js.version>
